@@ -123,13 +123,6 @@ Plot the map using Leaflet. Color the coastal cities in blue, the hurricane in r
 # convert the date info in the points data into a more useful format, from eg '2017/09/04 02:00:00' to '02:00 AM Tue'
 # labels <- format (as.POSIXlt(as.data.frame(irmaPoints)$FLDATELBL, format="%Y/%m/%d %I:%M:%S"), format = "%I:%M %p %a")
 
-#
-# NOTE: for some reason, geojson_read() messes up the FLDATELBL import, 
-# so I've used the VALIDTIME field instead.
-#
-# labels <- as.data.frame(irmaPoints)$VALIDTIME
-
-# When using readOGR(), the FLDATELBL isn't mangled...
 labels <- as.data.frame(irmaPoints)$FLDATELBL
 
 m <- leaflet () %>% addTiles()  
