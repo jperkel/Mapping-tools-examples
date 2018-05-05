@@ -51,13 +51,13 @@ New Orleans,29.999,-90.087
 Houston,29.782,-95.405
 "))
 
+# customize for your installation 
+base_path <- "/Users/jeffreyperkel/Downloads/al112017_5day_020/"
+
 # Import the advisory 'shape' files...
-irmaPolygon <- 
-  readOGR("/Users/jeffreyperkel/Downloads/al112017_5day_020/al112017-020_5day_pgn.shp")
-irmaLine <- 
-  readOGR("/Users/jeffreyperkel/Downloads/al112017_5day_020/al112017-020_5day_lin.shp")
-irmaPoints <- 
-  readOGR("/Users/jeffreyperkel/Downloads/al112017_5day_020/al112017-020_5day_pts.shp")
+irmaPolygon <- readOGR(paste(base_path, "al112017-020_5day_pgn.shp", sep = ""))
+irmaLine <- readOGR(paste(base_path, "al112017-020_5day_lin.shp", sep = ""))
+irmaPoints <- readOGR(paste (base_path, "al112017-020_5day_pts.shp", sep = ""))
 ```
 
 Plot the map using Leaflet. Color the coastal cities in blue, the hurricane in red, and give the polygon a black border. Add text to label the figure. And center it on Havana, Cuba.
