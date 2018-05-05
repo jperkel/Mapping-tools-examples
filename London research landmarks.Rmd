@@ -10,7 +10,6 @@ The following maps are created using the Leaflet R plugin. I created and read in
 
 ```{r echo=FALSE}
 library (leaflet)
-# library (magrittr)
 
 #
 # In Google Maps, find a location, right click, select 'What's Here', and copy 
@@ -31,15 +30,24 @@ Oxford University,51.754843,-1.254302
 Platform 9 3/4,51.532349,-0.123806
 "))
 
-# mark points with blue circles, except Nature, in red...
+# create a blank map
 m <- leaflet() 
+
+# mark points with blue circles, except Nature's offices in red...
 m <- addCircleMarkers(m, lat=df$Lat, lng=df$Long, label=df$Name, 
                color = (ifelse (df$Name == "Nature", "red", "blue"))) 
+
+# add an underlying basemap
 m <- addProviderTiles(m, providers$OpenTopoMap) 
+
+# center the view on London
 m <- setView(m, -0.119,51.525, zoom = 8) 
+
+# pull in MacroStrat tiles
 m <- addTiles (m, 'https://tiles.macrostrat.org/carto/{z}/{x}/{y}.png', 
                options = tileOptions(opacity = 0.6))
 
+# draw the map
 m
 ```
 
