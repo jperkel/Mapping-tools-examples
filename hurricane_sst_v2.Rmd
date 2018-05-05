@@ -1,6 +1,7 @@
 ---
 title: "Hurricane tracking data"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 ---
@@ -13,9 +14,9 @@ First, load required libraries.
 
 ```{r load libraries, echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 #############################################################################################
-# Author: Luke Miller, Mar 12, 2018
-# Author: Jeffrey Perkel, Mar 15, 2018
-#############################################################################################
+# Author: Jeffrey Perkel
+# OISST analysis code by Luke Miller, San Jose State University
+# #############################################################################################
 
 # install.packages('tidyverse')
 # install.packages('sf')
