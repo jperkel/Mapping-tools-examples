@@ -6,7 +6,7 @@ output:
     df_print: paged
 ---
 
-These mapping examples were created for a Nature Toolbox article by Jeffrey Perkel, published 7 June 2018. 
+These examples were created for a Nature Toolbox article by Jeffrey Perkel, published 7 June 2018. 
 
 In the first example, we will plot the US National Hurricane Center forecast track for Atlantic hurricane Irma using publicly available data (advisory #20, 0900 GMT on 04 September 2017), overlaid with potential coastal targets. 
 
