@@ -64,18 +64,32 @@ Plot the map using Leaflet. Color the coastal cities in blue, the hurricane in r
 
 ```{r draw the map, echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 
-labels <- as.data.frame(irmaPoints)$FLDATELBL
+labels <- as.data.frame(irmaPoints)$DATELBL
 
+# create a blank map
 m <- leaflet () 
+
+# add the basemap
 m <- addProviderTiles(m, providers$OpenTopoMap)  
+
+# draw the 'cone of uncertainty'
 m <- addPolygons(m, data = irmaPolygon, color = "black", weight = "2", fillColor="red", fillOpacity = 0.3) 
+
+# draw the predicted track
 m <- addPolylines(m, data = irmaLine) 
+
+# draw the predicted track positions
 m <- addCircleMarkers(m, data = irmaPoints, color = "red", radius = 2, label = labels,
                       labelOptions = labelOptions(noHide = TRUE, textOnly = TRUE)) 
+
+# add the coastal locations
 m <- addCircleMarkers(m, lat=df$Lat,lng=df$Long,label=df$Name, radius = 2, 
                       labelOptions = labelOptions(noHide = TRUE, textOnly = TRUE)) 
+
+# center the map on Havana, Cuba
 m <- setView(m, -82.357,23.111,zoom=4)
 
+# display the map
 m
 ```
 
@@ -123,7 +137,7 @@ irmaLine <- geojson_read("~/Google_Drive/irma_lin.json", what = "sp")
 irmaPoints <- geojson_read("~/Google_Drive/irma_pts.json", what = "sp")
 
 #
-# NOTE: for some reason, geojson_read() mangles the FLDATELBL field, 
+# NOTE: for some reason, geojson_read() mangles the DATELBL field, 
 # so I've used the VALIDTIME field instead.
 #
 labels <- as.data.frame(irmaPoints)$VALIDTIME
