@@ -6,7 +6,7 @@ output:
   pdf_document: default
 ---
 
-These examples were created for a Nature Toolbox article by Jeffrey Perkel, published 7 June 2018. The Leaflet library produces interactive maps that allow users to pan, zoom, and click on points of interest.
+These examples were created for a Nature Toolbox article by Jeffrey Perkel, published 7 June 2018. 
 
 The following maps are created using the Leaflet R plugin. The Leaflet library produces interactive maps that allow users to pan, zoom, and click on points of interest.
 
