@@ -6,7 +6,7 @@ output:
   pdf_document: default
 ---
 
-These examples were created for a Nature Toolbox article by Jeffrey Perkel, published 7 June 2018. 
+These examples were created for a Nature Toolbox article by Jeffrey Perkel, published 7 June 2018. The Leaflet library produces interactive maps that allow users to pan, zoom, and click on points of interest.  
 
 In the first example, we will plot the US National Hurricane Center forecast track for Atlantic hurricane Irma using publicly available data (advisory #20, 0900 GMT on 04 September 2017), overlaid with potential coastal targets. 
 
@@ -23,7 +23,6 @@ First, load required libraries.
 # install.packages('raster')
 # install.packages('mapview')
 
-library(tidyverse)
 library (sf)
 library (leaflet)
 library (mapview)
@@ -114,7 +113,7 @@ s = dropLayer(s, 2)
 # Necessary steps to get leaflet to plot western hemi data
 # See https://github.com/r-spatial/mapview/issues/6
 b = shift(s, -360)
-SST <- crop(b, extent(-100,180,-90,90),snap='in') %>% trim()
+SST <- trim (crop(b, extent(-100,180,-90,90),snap='in'))
 
 m <- addRasterImage (m, SST, colors = "Set3") 
 m <- setView(m, -64.768, 32.295, zoom = 4)
