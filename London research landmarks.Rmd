@@ -6,7 +6,7 @@ output:
   pdf_document: default
 ---
 
-These examples were created for a Nature Toolbox article by Jeffrey Perkel, published 7 June 2018. 
+These examples were created for a Nature Toolbox article by Jeffrey Perkel, published 7 June 2018. The Leaflet library produces interactive maps that allow users to pan, zoom, and click on points of interest.
 
 The following maps are created using the Leaflet R plugin. I created and read in a table of latitude/longitude values in comma-separated values (CSV) format, using values extracted from Google Maps. Then I plot those points on a topographical map of London, and overlay a second data source from Macrostrat.org, which colors the map according to its geological features.
 
