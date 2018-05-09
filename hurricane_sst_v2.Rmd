@@ -32,6 +32,10 @@ library (rgdal)
 library (raster)
 library (geojsonio)
 
+# customize for your installation 
+base_path <- "/Users/jeffreyperkel/Documents/Mapping_Data/"
+irma_dir <- "al112017_5day_020/"
+
 ```
 
 Next, read in data. These latitude and longitude data were obtained from Google Maps. The Irma data source is NHC: https://www.nhc.noaa.gov/gis/forecast/archive/al112017_5day_020.zip
@@ -52,19 +56,17 @@ New Orleans,29.999,-90.087
 Houston,29.782,-95.405
 "))
 
-# customize for your installation 
-base_path <- "/Users/jeffreyperkel/Downloads/al112017_5day_020/"
-
 # Import the advisory 'shape' files...
-irmaPolygon <- readOGR(paste(base_path, "al112017-020_5day_pgn.shp", sep = ""))
-irmaLine <- readOGR(paste(base_path, "al112017-020_5day_lin.shp", sep = ""))
-irmaPoints <- readOGR(paste (base_path, "al112017-020_5day_pts.shp", sep = ""))
+irmaPolygon <- readOGR(paste(base_path, irma_dir, "al112017-020_5day_pgn.shp", sep = ""))
+irmaLine <- readOGR(paste(base_path, irma_dir, "al112017-020_5day_lin.shp", sep = ""))
+irmaPoints <- readOGR(paste (base_path, irma_dir, "al112017-020_5day_pts.shp", sep = ""))
 ```
 
 Plot the map using Leaflet. Color the coastal cities in blue, the hurricane in red, and give the polygon a black border. Add text to label the figure. And center it on Havana, Cuba.
 
 ```{r draw the map, echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 
+# use the DATELBL field in the irmaPoints dataset to label the map
 labels <- as.data.frame(irmaPoints)$DATELBL
 
 # create a blank map
@@ -100,9 +102,9 @@ Let's overlay SST data for the same day, 4 September 2017. This code comes from 
 # Basic OISST data load
 
 # customize for your computer
-source ("~/Downloads/NOAA_OISST_ncdf4.R") 
+source (paste(base_path, "OISST/NOAA_OISST_ncdf4.R", sep = "")) 
 
-ssts = extractOISSTdaily("~/Downloads/sst.day.mean.2017.nc","~/Downloads/lsmask.oisst.v2.nc", lonW=160, lonE=359, latS=-10, latN=60, date1='2017-09-04', date2='2017-09-05')
+ssts = extractOISSTdaily(paste(base_path, "OISST/sst.day.mean.2017.nc", sep = ""), paste(base_path, "OISST/lsmask.oisst.v2.nc", sep = ""), lonW=160, lonE=359, latS=-10, latN=60, date1='2017-09-04', date2='2017-09-05')
 
 s = brick(ssts, 
           xmn = as.numeric(attr(ssts, 'dimnames')$Long[1]),
@@ -133,9 +135,9 @@ You can also plot GeoJSON data with Leaflet. First, convert your shape files to 
 ```{r use geojson files, message=FALSE, warning=FALSE, paged.print=FALSE}
 
 # import the GeoJSON files
-irmaPolygon <- geojson_read("~/Google_Drive/irma_pgn.json", what = "sp")
-irmaLine <- geojson_read("~/Google_Drive/irma_lin.json", what = "sp")
-irmaPoints <- geojson_read("~/Google_Drive/irma_pts.json", what = "sp")
+irmaPolygon <- geojson_read(paste (base_path, irma_dir, "irma_pgn.json", sep = ""), what = "sp")
+irmaLine <- geojson_read(paste (base_path, irma_dir, "irma_lin.json", sep = ""), what = "sp")
+irmaPoints <- geojson_read(paste (base_path, irma_dir, "irma_pts.json", sep = ""), what = "sp")
 
 #
 # NOTE: for some reason, geojson_read() mangles the DATELBL field, 
