@@ -19,6 +19,8 @@ output:
 
 library(tidyverse)
 library(sf)
+
+base_path <- "/Users/jeffreyperkel/Documents/Mapping_Data/"
 ```
 
 The following code block is adapted from http://r-spatial.org/r/2017/08/28/nest.html, a post on "Tidy storm trajectories", by Edzer Pebesma. It uses a dataset of historical Atlantic hurricane storm tracks that is built into the 'dplyr' package. First it pulls in the latitude/longitude values of each storm, then connects them into tracks. Finally, we look exclusively at those storms in the 2005 season. 
@@ -54,11 +56,11 @@ This code comes from Luke Miller at San Jose State University in California and 
 library (raster)
 
 # customize for your computer
-source ("~/Downloads/NOAA_OISST_ncdf4.R") 
+source (paste(base_path, "OISST/NOAA_OISST_ncdf4.R", sep = "")) 
 
 # Extract 2 days of data for the North Atlantic ocean. 
 # Customize the file paths to suit your local machine
-ssts = extractOISSTdaily("~/Downloads/sst.day.mean.2005.v2.nc","~/Downloads/lsmask.oisst.v2.nc", lonW=160, lonE=359, latS=-10, latN=60, date1='2005-09-01', date2='2005-09-02')
+ssts = extractOISSTdaily(paste(base_path, "OISST/sst.day.mean.2005.v2.nc", sep=""), paste(base_path, "OISST/lsmask.oisst.v2.nc", sep=""), lonW=160, lonE=359, latS=-10, latN=60, date1='2005-09-01', date2='2005-09-02')
 
 s = brick(ssts, 
           xmn = as.numeric(attr(ssts, 'dimnames')$Long[1]),
@@ -111,9 +113,9 @@ New Orleans,29.999,-90.087
 Houston,29.782,-95.405
 "))
 
-irmaPolygon <- readOGR("/Users/jeffreyperkel/Downloads/al112017_5day_020/al112017-020_5day_pgn.shp")
-irmaLine <- readOGR("/Users/jeffreyperkel/Downloads/al112017_5day_020/al112017-020_5day_lin.shp")
-irmaPoints <- readOGR("/Users/jeffreyperkel/Downloads/al112017_5day_020/al112017-020_5day_pts.shp")
+irmaPolygon <- readOGR(paste(base_path, irma_dir, "al112017-020_5day_pgn.shp", sep = ""))
+irmaLine <- readOGR(paste(base_path, irma_dir, "al112017-020_5day_lin.shp", sep = ""))
+irmaPoints <- readOGR(paste (base_path, irma_dir, "al112017-020_5day_pts.shp", sep = ""))
 ```
 
 Plot the map using Leaflet. Color the coastal cities in blue, the hurricane in red, and give the polygon a black border. Add text to label the figure. And center it on Havana, Cuba.
@@ -138,7 +140,7 @@ m
 Let's overlay SST data for the same day...
 
 ```{r}
-ssts = extractOISSTdaily("~/Downloads/sst.day.mean.2017.nc","~/Downloads/lsmask.oisst.v2.nc", lonW=160, lonE=359, latS=-10, latN=60, date1='2017-09-04', date2='2017-09-05')
+ssts = extractOISSTdaily(paste(base_path, "OISST/sst.day.mean.2017.nc", sep = ""), paste(base_path, "OISST/lsmask.oisst.v2.nc", sep = ""), lonW=160, lonE=359, latS=-10, latN=60, date1='2017-09-04', date2='2017-09-05')
 
 s = brick(ssts, 
           xmn = as.numeric(attr(ssts, 'dimnames')$Long[1]),
@@ -171,9 +173,9 @@ Alternatively, you can convert shape files to GeoJSON using ogr2ogr web client: 
 library(geojsonio)
 
 # import the GeoJSON files
-irmaPolygon <- geojson_read("~/Google_Drive/irma_pgn.json", what = "sp")
-irmaLine <- geojson_read("~/Google_Drive/irma_lin.json", what = "sp")
-irmaPoints <- geojson_read("~/Google_Drive/irma_pts.json", what = "sp")
+irmaPolygon <- geojson_read(paste (base_path, irma_dir, "irma_pgn.json", sep = ""), what = "sp")
+irmaLine <- geojson_read(paste (base_path, irma_dir, "irma_lin.json", sep = ""), what = "sp")
+irmaPoints <- geojson_read(paste (base_path, irma_dir, "irma_pts.json", sep = ""), what = "sp")
 
 #
 # NOTE: for some reason, geojson_read() messes up the FLDATELBL import, 
