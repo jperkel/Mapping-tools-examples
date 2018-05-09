@@ -18,29 +18,30 @@ First, load required libraries.
 #############################################################################################
 # Author: Jeffrey Perkel
 # OISST analysis code by Luke Miller, San Jose State University
-# #############################################################################################
+# ###########################################################################################
 
-# install.packages('tidyverse')
+# uncomment to install packages as necessary
 # install.packages('sf')
+# install.packages('leaflet')
+# install.packages('rgdal')
 # install.packages('raster')
-# install.packages('mapview')
+# install.packages('geojsonio')
 
 library (sf)
 library (leaflet)
-library (mapview)
 library (rgdal)
 library (raster)
 library (geojsonio)
-
-# customize for your installation 
-base_path <- "/Users/jeffreyperkel/Documents/Mapping_Data/"
-irma_dir <- "al112017_5day_020/"
 
 ```
 
 Next, read in data. These latitude and longitude data were obtained from Google Maps. The Irma data source is NHC: https://www.nhc.noaa.gov/gis/forecast/archive/al112017_5day_020.zip
 
 ```{r load shape files, echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+
+# customize for your installation 
+base_path <- "/Users/jeffreyperkel/Documents/Mapping_Data/"
+irma_dir <- "al112017_5day_020/"
 
 df <- read.csv(textConnection(
 "Name,Lat,Long
