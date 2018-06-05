@@ -55,15 +55,3 @@ m <- addTiles (m, 'https://tiles.macrostrat.org/carto/{z}/{x}/{y}.png',
 m
 ```
 
-
-We can also plot those points on a 'hybrid' satellite map layer: 
-
-```{r echo=TRUE}
-m <- leaflet() 
-m <- addMarkers(m, lat=df$Lat, lng=df$Long, label=df$Name)
-m <- setView(m, -0.119,51.525, zoom = 8) 
-m <- addProviderTiles(m, 'Esri.WorldImagery') 
-m <- addProviderTiles(m, "CartoDB.PositronOnlyLabels")
-m
-```
-
