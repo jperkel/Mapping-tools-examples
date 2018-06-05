@@ -6,7 +6,7 @@ output:
   pdf_document: default
 ---
 
-These examples were created for a Nature Toolbox article by Jeffrey Perkel, published 7 June 2018. 
+These examples were created for a Nature Toolbox article by Jeffrey Perkel, published 5 June 2018. [https://www.nature.com/articles/d41586-018-05331-6]
 
 The following maps are created using the Leaflet R plugin. The Leaflet library produces interactive maps that allow users to pan, zoom, and click on points of interest.
 
@@ -32,7 +32,6 @@ library (leaflet)
 library (rgdal)
 library (raster)
 library (geojsonio)
-library (htmlwidgets)
 ```
 
 Next, read in data. These latitude and longitude data were obtained from Google Maps. The Irma data source is NHC: https://www.nhc.noaa.gov/gis/forecast/archive/al112017_5day_020.zip
@@ -123,7 +122,6 @@ SST <- trim (crop(b, extent(-100,180,-90,90),snap='in'))
 m <- addRasterImage (m, SST, colors = "Set3") 
 m <- setView(m, -64.768, 32.295, zoom = 4)
 m
-saveWidget(m, "final_irma.html", selfcontained = FALSE)
 ```
 
 Note that the 'raster' package can also plot the OISST data directly, and provide a nice legend...
@@ -159,7 +157,11 @@ m <- addCircleMarkers(m, lat=df$Lat,lng=df$Long,label=df$Name, radius = 2,
 m <- setView(m, -82.357,23.111,zoom=4)
 
 m
-saveWidget (m, file = "my_map.html", selfcontained = FALSE)
 ```
 
+Collect session information.
+
+```{r}
+sessionInfo()
+```
 
