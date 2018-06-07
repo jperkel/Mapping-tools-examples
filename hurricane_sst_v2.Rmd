@@ -167,9 +167,9 @@ mapbox_url <- "https://api.mapbox.com/styles/v1/jperkel/cji553ibu05dn2rl6uta39s1
 
 map_attr <- "(c) <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a>"
 
-m <- leaflet (df)
-m <- addMarkers(m)
+m <- leaflet ()
 m <- addTiles(m, urlTemplate = mapbox_url, attribution = map_attr)
+m <- setView(m, -82.357,23.111,zoom=4)
 
 m
 ```
