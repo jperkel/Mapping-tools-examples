@@ -8,7 +8,7 @@ output:
 
 These examples were created for a Nature Toolbox article by Jeffrey Perkel, published 5 June 2018. [https://www.nature.com/articles/d41586-018-05331-6]
 
-The following maps are created using the Leaflet R plugin. The Leaflet library produces interactive maps that allow users to pan, zoom, and click on points of interest.
+These maps are created using the Leaflet R plugin. The Leaflet library produces interactive maps that allow users to pan, zoom, and click on points of interest.
 
 In this example, we will plot the US National Hurricane Center forecast track for Atlantic hurricane Irma using publicly available data (advisory #20, 0900 GMT on 04 September 2017), overlaid with potential coastal targets. Then we will overlay sea surface temperature data for the same date, using code provided by Luke Miller, San Jose State University.
 
@@ -35,6 +35,7 @@ library (geojsonio)
 ```
 
 Next, read in data. These latitude and longitude data were obtained from Google Maps. The Irma data source is NHC: https://www.nhc.noaa.gov/gis/forecast/archive/al112017_5day_020.zip
+
 
 ```{r load shape files, echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 
@@ -96,7 +97,11 @@ m <- setView(m, -82.357,23.111,zoom=4)
 m
 ```
 
+
 Let's overlay SST data for the same day, 4 September 2017. This code comes from Luke Miller at San Jose State University in California and is based on his 2014 blog post: https://lukemiller.org/index.php/2014/11/extracting-noaa-sea-surface-temperatures-with-ncdf4/. It retrieves sea surface temperatures for a given latitude/longitude and date. 
+
+You'll need to download the R script NOAA_OISST_ncdf4.R from https://github.com/millerlp/Misc_R_scripts/blob/master/NOAA_OISST_ncdf4.R. Download the OISST data themselves and the file lsmask.oisst.v2.nc from https://www.esrl.noaa.gov/psd/data/gridded/data.noaa.oisst.v2.highres.html
+
 
 ```{r massage & plot OISST data, message=FALSE, warning=FALSE, paged.print=FALSE}
 # Basic OISST data load
@@ -159,8 +164,11 @@ m <- setView(m, -82.357,23.111,zoom=4)
 m
 ```
 
-Edit: 7 June 2018
-Mikel Maron, who leads community outreach at Mapbox, pointed out to me after this article was published that Leaflet users can also pull in tiles from Mapbox. To test this, I mapped the same Irma dataset in Mapbox Studio (www.mapbox.com/studio), obtained a shareable URL, and produced the following code based on a previously published example (https://rpubs.com/walkerke/rstudio-mapbox). 
+
+**Update: 7 June 2018**
+
+Mikel Maron, who leads community outreach at Mapbox, pointed out to me after this article was published that Leaflet users can also pull in tiles from Mapbox. To test this, I mapped the  Irma dataset in Mapbox Studio (www.mapbox.com/studio), obtained a shareable URL, and produced the following code based on a previously published example (https://rpubs.com/walkerke/rstudio-mapbox). 
+
 
 ```{r}
 mapbox_url <- "https://api.mapbox.com/styles/v1/jperkel/cji553ibu05dn2rl6uta39s1l/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianBlcmtlbCIsImEiOiJjamVocHpxMzMwbmt6MzNxczF3cjVlcHNrIn0.VL2_izlLEMZ961Kiq1dacA"
@@ -173,6 +181,7 @@ m <- setView(m, -82.357,23.111,zoom=4)
 
 m
 ```
+
 
 
 Collect session information.
