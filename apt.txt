@@ -1,3 +1,3 @@
-libnode-dev
 libprotobuf-dev
 libudunits2-dev
+libv8-dev
