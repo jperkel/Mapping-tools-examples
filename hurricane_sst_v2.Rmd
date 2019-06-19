@@ -34,7 +34,8 @@ library (raster)
 library (geojsonio)
 ```
 Unzip the shape files...
-```
+
+```{r}
 unzip("al112017_5day_020.zip", exdir="al112017_5day_020")
 ```
 
