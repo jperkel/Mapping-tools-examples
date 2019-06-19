@@ -4,7 +4,7 @@
 
 Simple examples of mapping in R, created for a Nature Toolbox article by Jeffrey Perkel, published 5 June 2018. [https://www.nature.com/articles/d41586-018-05331-6]
 
-Click the 'Launch Binder' button above to launch an interactive RStudio session in the cloud, in which you can explore and execute two RMarkdown notebooks.
+Click the 'Launch Binder' button above to launch an interactive RStudio session in the cloud, in which you can explore and execute two RMarkdown notebooks. (Executable versions of these examples also are available on [Code Ocean](https://codeocean.com/capsule/4725205/tree/v1) and [Nextjournal](https://nextjournal.com/jperkel/mapping-examples-in-nextjournal).
 
 Live versions of these documents are also available at:  
 https://rpubs.com/j_perkel/London  
