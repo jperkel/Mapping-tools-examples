@@ -1,0 +1,5 @@
+install.packages('geojsonio')
+install.packages('leaflet')
+install.packages('raster')
+install.packages('rgdal')
+install.packages('sf')
