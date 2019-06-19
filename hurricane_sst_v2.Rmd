@@ -33,6 +33,10 @@ library (rgdal)
 library (raster)
 library (geojsonio)
 ```
+Unzip the shape files...
+```
+unzip("al112017_5day_020.zip", exdir="al112017_5day_020")
+```
 
 Next, read in data. These latitude and longitude data were obtained from Google Maps. The Irma data source is NHC: https://www.nhc.noaa.gov/gis/forecast/archive/al112017_5day_020.zip
 
@@ -40,8 +44,8 @@ Next, read in data. These latitude and longitude data were obtained from Google 
 ```{r load shape files, echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
 
 # customize for your installation 
-base_path <- "/Users/jeffreyperkel/Documents/Mapping_Data/"
-irma_dir <- "al112017_5day_020/"
+# base_path <- "/Users/jeffreyperkel/Documents/Mapping_Data/"
+# irma_dir <- "al112017_5day_020/"
 
 df <- read.csv(textConnection(
 "Name,Lat,Long
@@ -58,9 +62,13 @@ Houston,29.782,-95.405
 "))
 
 # Import the advisory 'shape' files...
-irmaPolygon <- readOGR(paste(base_path, irma_dir, "al112017-020_5day_pgn.shp", sep = ""))
-irmaLine <- readOGR(paste(base_path, irma_dir, "al112017-020_5day_lin.shp", sep = ""))
-irmaPoints <- readOGR(paste (base_path, irma_dir, "al112017-020_5day_pts.shp", sep = ""))
+# irmaPolygon <- readOGR(paste(base_path, irma_dir, "al112017-020_5day_pgn.shp", sep = ""))
+# irmaLine <- readOGR(paste(base_path, irma_dir, "al112017-020_5day_lin.shp", sep = ""))
+# irmaPoints <- readOGR(paste (base_path, irma_dir, "al112017-020_5day_pts.shp", sep = ""))
+irmaPolygon <- readOGR(dsn="al112017_5day_020", layer="al112017-020_5day_pgn")
+irmaLine <- readOGR(dsn="al112017_5day_020", layer="al112017-020_5day_lin")
+irmaPoints <- readOGR(dsn="al112017_5day_020", layer="al112017-020_5day_pts")
+
 ```
 
 Plot the map using Leaflet. Color the coastal cities in blue, the hurricane in red, and give the polygon a black border. Add text to label the figure. And center it on Havana, Cuba.
@@ -107,9 +115,9 @@ You'll need to download the R script NOAA_OISST_ncdf4.R from https://github.com/
 # Basic OISST data load
 
 # customize for your computer
-source (paste(base_path, "OISST/NOAA_OISST_ncdf4.R", sep = "")) 
+source ("NOAA_OISST_ncdf4.R") 
 
-ssts = extractOISSTdaily(paste(base_path, "OISST/sst.day.mean.2017.nc", sep = ""), paste(base_path, "OISST/lsmask.oisst.v2.nc", sep = ""), lonW=160, lonE=359, latS=-10, latN=60, date1='2017-09-04', date2='2017-09-05')
+ssts = extractOISSTdaily("sst.day.mean.2017.nc", "lsmask.oisst.v2.nc", lonW=160, lonE=359, latS=-10, latN=60, date1='2017-09-04', date2='2017-09-05')
 
 s = brick(ssts, 
           xmn = as.numeric(attr(ssts, 'dimnames')$Long[1]),
@@ -140,28 +148,28 @@ You can also plot GeoJSON data with Leaflet. First, convert your shape files to 
 ```{r use geojson files, message=FALSE, warning=FALSE, paged.print=FALSE}
 
 # import the GeoJSON files
-irmaPolygon <- geojson_read(paste (base_path, irma_dir, "irma_pgn.json", sep = ""), what = "sp")
-irmaLine <- geojson_read(paste (base_path, irma_dir, "irma_lin.json", sep = ""), what = "sp")
-irmaPoints <- geojson_read(paste (base_path, irma_dir, "irma_pts.json", sep = ""), what = "sp")
+#irmaPolygon <- geojson_read(paste (base_path, irma_dir, "irma_pgn.json", sep = ""), what = "sp")
+#irmaLine <- geojson_read(paste (base_path, irma_dir, "irma_lin.json", sep = ""), what = "sp")
+#irmaPoints <- geojson_read(paste (base_path, irma_dir, "irma_pts.json", sep = ""), what = "sp")
 
 #
 # NOTE: for some reason, geojson_read() mangles the DATELBL field, 
 # so I've used the VALIDTIME field instead.
 #
-labels <- as.data.frame(irmaPoints)$VALIDTIME
+#labels <- as.data.frame(irmaPoints)$VALIDTIME
 
-m <- leaflet () 
-m <- addProviderTiles(m, providers$OpenTopoMap)  
-m <- addPolygons(m, data = irmaPolygon, color = "black", weight = "2", 
-                 fillColor="red", fillOpacity = 0.3) 
-m <- addPolylines(m, data = irmaLine) 
-m <- addCircleMarkers(m, data = irmaPoints, color = "red", radius = 2, 
-                 label = labels, labelOptions = labelOptions(noHide = TRUE, textOnly = TRUE)) 
-m <- addCircleMarkers(m, lat=df$Lat,lng=df$Long,label=df$Name, radius = 2, 
-                 labelOptions = labelOptions(noHide = TRUE, textOnly = TRUE)) 
-m <- setView(m, -82.357,23.111,zoom=4)
+#m <- leaflet () 
+#m <- addProviderTiles(m, providers$OpenTopoMap)  
+#m <- addPolygons(m, data = irmaPolygon, color = "black", weight = "2", 
+#                 fillColor="red", fillOpacity = 0.3) 
+#m <- addPolylines(m, data = irmaLine) 
+#m <- addCircleMarkers(m, data = irmaPoints, color = "red", radius = 2, 
+#                 label = labels, labelOptions = labelOptions(noHide = TRUE, textOnly = TRUE)) 
+#m <- addCircleMarkers(m, lat=df$Lat,lng=df$Long,label=df$Name, radius = 2, 
+#                 labelOptions = labelOptions(noHide = TRUE, textOnly = TRUE)) 
+#m <- setView(m, -82.357,23.111,zoom=4)
 
-m
+#m
 ```
 
 
@@ -171,15 +179,15 @@ Mikel Maron, who leads community outreach at Mapbox, pointed out to me after thi
 
 
 ```{r}
-mapbox_url <- "https://api.mapbox.com/styles/v1/jperkel/cji553ibu05dn2rl6uta39s1l/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianBlcmtlbCIsImEiOiJjamVocHpxMzMwbmt6MzNxczF3cjVlcHNrIn0.VL2_izlLEMZ961Kiq1dacA"
+#mapbox_url <- "https://api.mapbox.com/styles/v1/jperkel/cji553ibu05dn2rl6uta39s1l/tiles/256/{z}/{x}/{y}?#access_token=pk.eyJ1IjoianBlcmtlbCIsImEiOiJjamVocHpxMzMwbmt6MzNxczF3cjVlcHNrIn0.VL2_izlLEMZ961Kiq1dacA"
 
-map_attr <- "(c) <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a>"
+#map_attr <- "(c) <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a>"
 
-m <- leaflet ()
-m <- addTiles(m, urlTemplate = mapbox_url, attribution = map_attr)
-m <- setView(m, -82.357,23.111,zoom=4)
+#m <- leaflet ()
+#m <- addTiles(m, urlTemplate = mapbox_url, attribution = map_attr)
+#m <- setView(m, -82.357,23.111,zoom=4)
 
-m
+#m
 ```
 
 
