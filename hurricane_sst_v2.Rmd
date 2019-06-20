@@ -152,25 +152,28 @@ You can also plot GeoJSON data with Leaflet. First, convert your shape files to 
 #irmaPolygon <- geojson_read(paste (base_path, irma_dir, "irma_pgn.json", sep = ""), what = "sp")
 #irmaLine <- geojson_read(paste (base_path, irma_dir, "irma_lin.json", sep = ""), what = "sp")
 #irmaPoints <- geojson_read(paste (base_path, irma_dir, "irma_pts.json", sep = ""), what = "sp")
+irmaPolygon <- geojson_read("irma_pgn.json", what = "sp")
+irmaLine <- geojson_read("irma_lin.json", what = "sp")
+irmaPoints <- geojson_read("irma_pts.json", what = "sp")
 
 #
 # NOTE: for some reason, geojson_read() mangles the DATELBL field, 
 # so I've used the VALIDTIME field instead.
 #
-#labels <- as.data.frame(irmaPoints)$VALIDTIME
+labels <- as.data.frame(irmaPoints)$VALIDTIME
 
-#m <- leaflet () 
-#m <- addProviderTiles(m, providers$OpenTopoMap)  
-#m <- addPolygons(m, data = irmaPolygon, color = "black", weight = "2", 
-#                 fillColor="red", fillOpacity = 0.3) 
-#m <- addPolylines(m, data = irmaLine) 
-#m <- addCircleMarkers(m, data = irmaPoints, color = "red", radius = 2, 
-#                 label = labels, labelOptions = labelOptions(noHide = TRUE, textOnly = TRUE)) 
-#m <- addCircleMarkers(m, lat=df$Lat,lng=df$Long,label=df$Name, radius = 2, 
-#                 labelOptions = labelOptions(noHide = TRUE, textOnly = TRUE)) 
-#m <- setView(m, -82.357,23.111,zoom=4)
+m <- leaflet () 
+m <- addProviderTiles(m, providers$OpenTopoMap)  
+m <- addPolygons(m, data = irmaPolygon, color = "black", weight = "2", 
+                 fillColor="red", fillOpacity = 0.3) 
+m <- addPolylines(m, data = irmaLine) 
+m <- addCircleMarkers(m, data = irmaPoints, color = "red", radius = 2, 
+                 label = labels, labelOptions = labelOptions(noHide = TRUE, textOnly = TRUE)) 
+m <- addCircleMarkers(m, lat=df$Lat,lng=df$Long,label=df$Name, radius = 2, 
+                 labelOptions = labelOptions(noHide = TRUE, textOnly = TRUE)) 
+m <- setView(m, -82.357,23.111,zoom=4)
 
-#m
+m
 ```
 
 
@@ -180,15 +183,15 @@ Mikel Maron, who leads community outreach at Mapbox, pointed out to me after thi
 
 
 ```{r}
-#mapbox_url <- "https://api.mapbox.com/styles/v1/jperkel/cji553ibu05dn2rl6uta39s1l/tiles/256/{z}/{x}/{y}?#access_token=pk.eyJ1IjoianBlcmtlbCIsImEiOiJjamVocHpxMzMwbmt6MzNxczF3cjVlcHNrIn0.VL2_izlLEMZ961Kiq1dacA"
+mapbox_url <- "https://api.mapbox.com/styles/v1/jperkel/cji553ibu05dn2rl6uta39s1l/tiles/256/{z}/{x}/{y}?#access_token=pk.eyJ1IjoianBlcmtlbCIsImEiOiJjamVocHpxMzMwbmt6MzNxczF3cjVlcHNrIn0.VL2_izlLEMZ961Kiq1dacA"
 
-#map_attr <- "(c) <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a>"
+map_attr <- "(c) <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a>"
 
-#m <- leaflet ()
-#m <- addTiles(m, urlTemplate = mapbox_url, attribution = map_attr)
-#m <- setView(m, -82.357,23.111,zoom=4)
+m <- leaflet ()
+m <- addTiles(m, urlTemplate = mapbox_url, attribution = map_attr)
+m <- setView(m, -82.357,23.111,zoom=4)
 
-#m
+m
 ```
 
 
