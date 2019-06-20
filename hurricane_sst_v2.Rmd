@@ -183,7 +183,7 @@ Mikel Maron, who leads community outreach at Mapbox, pointed out to me after thi
 
 
 ```{r}
-mapbox_url <- "https://api.mapbox.com/styles/v1/jperkel/cji553ibu05dn2rl6uta39s1l/tiles/256/{z}/{x}/{y}?#access_token=pk.eyJ1IjoianBlcmtlbCIsImEiOiJjamVocHpxMzMwbmt6MzNxczF3cjVlcHNrIn0.VL2_izlLEMZ961Kiq1dacA"
+mapbox_url <- "https://api.mapbox.com/styles/v1/jperkel/cji553ibu05dn2rl6uta39s1l/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianBlcmtlbCIsImEiOiJjamVocHpxMzMwbmt6MzNxczF3cjVlcHNrIn0.VL2_izlLEMZ961Kiq1dacA#4.1/19.865084/-64.106529/0"
 
 map_attr <- "(c) <a href='https://www.mapbox.com/map-feedback/'>Mapbox</a>"
 
